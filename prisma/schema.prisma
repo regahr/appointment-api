@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Appointment {
+  id       Int    @id @default(autoincrement())
+  date     String
+  time     String
+}
+
+model Configuration {
+  id                     Int      @id @default(autoincrement())
+  slotDuration           Int      @default(30) // Duration in minutes, minimum 5
+  maxSlotsPerAppointment Int      @default(1)  // Maximum slots per appointment (1 to 5)
+  operationalStart       String   @default("09:00") // Start time for appointments
+  operationalEnd         String   @default("18:00") // End time for appointments
+  daysOff                String   @default("") // Comma-separated string of days off
+  unavailableHours       String   @default("") // Comma-separated string of unavailable hours
+  isWeekendOff           Boolean  @default(true) // Flag to indicate if weekends are off
+}
